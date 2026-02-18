@@ -1,0 +1,42 @@
+/* Basic page style */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+    margin: 0;
+}
+
+/* Section container */
+.features {
+    width: 60%;
+    margin: 40px auto;
+}
+
+/* Section heading */
+.features h2 {
+    text-align: center;
+    color: navy;
+    margin-bottom: 20px;
+}
+
+/* Remove default list style */
+.feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+/* Feature items */
+.feature-list li {
+    background-color: lightblue;
+    color: #333;
+    border: 2px solid steelblue;
+    padding: 15px;
+    margin: 12px 0;
+    font-size: 16px;
+}
+
+/* Hover effect */
+.feature-list li:hover {
+    background-color: steelblue;
+    color: white;
+}
+
