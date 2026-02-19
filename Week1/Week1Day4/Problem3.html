@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Discount Calculator</title>
+</head>
+<body>
+    <h1>Simple Discount Calculator</h1>
+
+    <script>
+
+        let purchaseAmount = 4500; 
+
+        let discount = 0;  
+
+        if (purchaseAmount >= 5000) {
+            discount = purchaseAmount * 0.20; 
+        } else if (purchaseAmount >= 3000) {
+            discount = purchaseAmount * 0.10; 
+        } else {
+            discount = 0; 
+        }
+
+        let finalAmount = purchaseAmount - discount;
+
+        document.write("Purchase Amount: " + purchaseAmount + "<br>");
+        document.write("Discount: " + discount + "<br>");
+        document.write("Final Payable Amount: " + finalAmount + "<br>");
+    </script>
+</body>
+</html>
