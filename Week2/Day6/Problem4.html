@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Expense Tracker</title>
+    <style>
+        body { font-family:sans-serif; background:#f5f5f5; padding:20px; text-align:center; }
+        input, button { padding:8px; margin:5px; border-radius:5px; border:1px solid #ccc; }
+        button { background:#4CAF50; color:white; border:none; cursor:pointer; }
+        button:hover { background:#45a049; }
+        ul { list-style:none; padding:0; max-width:500px; margin:20px auto; }
+        li { background:#fff; margin:5px 0; padding:10px; border-radius:5px; display:flex; justify-content:space-between; }
+        li button { background:#f44336; color:white; border:none; cursor:pointer; padding:5px 8px; border-radius:5px; }
+        li button:hover { background:#da190b; }
+</style>
+
+    </head>
+    <body>
+        <h1>Expense Tracker </h1>
+        <label for="in1">Expense name</label>
+        <input type="text" id="in1" placeholder="enter the expense name">
+        <label for="amout">amout</label>
+        <input type="number" id="amout" placeholder="enter amount">
+        <label for="date">date</label>
+        <input type="date" id="date">
+        <button onclick="openDB()">Open DB</button>
+        <button onclick="addExpense()">Create</button>
+        <button onclick="viewExpenses()">Read</button>
+        <button onclick="deleteExpense()">Delete</button>
+        <ul id="output"></ul>
+
+        <script>
+let db;
+
+// Open Database
+function openDB() {
+    let request = indexedDB.open("expensedb", 1);
+
+    request.onupgradeneeded = function(e) {
+        db = e.target.result;
+
+        let store = db.createObjectStore("expenses", {
+            keyPath: "id",
+            autoIncrement: true
+        });
+
+        store.createIndex("expenseName", "expenseName", { unique: false });
+        store.createIndex("amount", "amount", { unique: false });
+        store.createIndex("date", "date", { unique: false });
+    };
+
+    request.onsuccess = function(e) {
+        db = e.target.result;
+        alert("Database Ready");
+    };
+
+    request.onerror = function() {
+        console.log("Error opening DB");
+    };
+}
+
+// CREATE
+function addExpense() {
+    let name = document.getElementById("in1").value;
+    let amount = document.getElementById("amout").value;
+    let date = document.getElementById("date").value;
+
+    let transaction = db.transaction("expenses", "readwrite");
+    let store = transaction.objectStore("expenses");
+
+    let expense = {
+        expenseName: name,
+        amount: amount,
+        date: date
+    };
+
+    store.add(expense);
+
+    alert("Expense Added!");
+    viewExpenses();
+}
+
+// READ
+function viewExpenses() {
+
+    if (!db) {
+        alert("Database not ready!");
+        return;
+    }
+
+    let transaction = db.transaction("expenses", "readonly");
+    let store = transaction.objectStore("expenses");
+
+    let request = store.getAll();
+
+    request.onsuccess = function() {
+
+        let result = request.result;
+        let list = document.getElementById("output");
+
+        list.innerHTML = ""; 
+
+        result.forEach(function(item) {
+
+            let li = document.createElement("li");
+
+            li.textContent =
+                "ID: " + item.id +
+                " | Expense Name: " + item.expenseName +
+                " | Amount: " + item.amount +
+                " | Date: " + item.date;
+
+            list.appendChild(li);
+        });
+    };
+}
+
+// DELETE (delete by ID)
+function deleteExpense() {
+    let id = prompt("Enter ID to delete:");
+
+    let transaction = db.transaction(["expenses"], "readwrite");
+    let store = transaction.objectStore("expenses");
+
+    store.delete(Number(id));
+
+    alert("Deleted!");
+}
+</script>
+    </body>
+</html>
