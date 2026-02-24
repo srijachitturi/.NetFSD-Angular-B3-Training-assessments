@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Marks Analyzer</title>
+</head>
+<body>
+
+<h3>Student Marks Analyzer</h3>
+<p id="output"></p>
+
+<script>
+  // student marks in an array
+  const marks = [40, 50, 70, 80, 90];
+
+  const mappedMarks = marks.map(mark => mark);
+  const total = mappedMarks.reduce((sum, mark) => sum + mark, 0);
+  const average = total / mappedMarks.length;
+
+  const result = average >= 50 ? "Pass" : "Fail";
+
+  document.getElementById("output").innerHTML = `
+    Total Marks: ${total}<br>
+    Average Marks: ${average}<br>
+    Result: ${result}
+  `;
+</script>
+
+</body>
+</html>

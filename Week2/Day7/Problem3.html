@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Data system</title>
+</head>
+
+<body>
+
+<h2>Employee Data System</h2>
+
+<select id="jobSelect">
+    <option value="All">All Employees</option>
+    <option value="Manager">Manager</option>
+    <option value="Salesman">Salesman</option>
+    <option value="Clerk">Clerk</option>
+    <option value="Developer">Developer</option>
+</select>
+
+<button onclick="showEmployees()">Show Emps</button>
+
+<div id="output"></div>
+
+<script>
+let employees = [
+    { id: "EMP1", name: "Srija", job: "Manager", salary: 60000 },
+    { id: "EMP2", name: "Sita", job: "Salesman", salary: 30000 },
+    { id: "EMP3", name: "Ram", job: "Clerk", salary: 17000 },
+    { id: "EMP4", name: "Pavan", job: "Developer", salary: 55000 },
+    { id: "EMP5", name: "Surya", job: "Salesman", salary: 29000 }
+];
+
+function showEmployees() {
+
+    let selectedJob = document.getElementById("jobSelect").value;
+    let filteredEmployees;
+
+    if (selectedJob === "All") {
+        filteredEmployees = employees;
+    } else {
+        filteredEmployees = employees.filter(emp => emp.job === selectedJob);
+    }
+
+    let rows = filteredEmployees.map(emp => `
+        <tr>
+            <td>${emp.id}</td>
+            <td>${emp.name}</td>
+            <td>${emp.job}</td>
+            <td>${emp.salary}</td>
+        </tr>
+    `).join("");
+
+    document.getElementById("output").innerHTML = `
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>Emp ID</th>
+                <th>Name</th>
+                <th>Job</th>
+                <th>Salary</th>
+            </tr>
+            ${rows}
+        </table>
+    `;
+}
+</script>
+
+</body>
+</html>
