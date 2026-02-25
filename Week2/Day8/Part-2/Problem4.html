@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f4f4f4; }
+    .box { background: white; padding: 15px; border-radius: 10px; width: 520px; }
+    input { width: 98%; padding: 8px; }
+    ul { border: 2px solid blue; padding: 15px; margin-top: 10px; background: #fff; }
+    li { margin: 8px 0; display: flex; justify-content: space-between; align-items: center; }
+    .no { color: red; }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h3>Mini Product Search App</h3>
+  <hr/>
+
+  <input type="text" id="txtSearch" placeholder="Search product..." />
+
+  <ul id="list1"></ul>
+</div>
+
+<script>
+  var txtObj  = document.getElementById("txtSearch");
+  var listObj = document.getElementById("list1");
+
+  let products = ["iPhone", "Samsung", "OnePlus", "Vivo", "Oppo", "Realme", "Nokia"];
+
+  function displayProducts(arr)
+  {
+    if(arr.length == 0)
+    {
+      listObj.innerHTML = "<li class='no'>No Results Found</li>";
+      return;
+    }
+
+    let str = "";
+    for(let p of arr)
+    {
+      str += `<li>${p} <button data-action="buy" data-name="${p}">Buy</button></li>`;
+    }
+    listObj.innerHTML = str;
+  }
+
+  function filterProducts()
+  {
+    let key = txtObj.value.toLowerCase();
+    let result = products.filter(p => p.toLowerCase().includes(key));
+    displayProducts(result);
+  }
+
+ 
+  txtObj.addEventListener("input", filterProducts);
+
+  // Event Delegation 
+  listObj.addEventListener("click", function(e)
+  {
+    if(e.target.getAttribute("data-action") == "buy")
+    {
+      alert("Selected: " + e.target.getAttribute("data-name"));
+    }
+  });
+
+  displayProducts(products);
+</script>
+
+</body>
+</html>

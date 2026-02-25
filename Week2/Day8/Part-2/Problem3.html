@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    font-family: Arial;
+    background-color: #eef2f7;
+    padding: 20px;
+  }
+
+  .box {
+    background-color: #ffffff;
+    padding: 15px;
+    width: 320px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+
+  h3 {
+    color: #2c3e50;
+  }
+
+  input {
+    padding: 6px;
+    width: 190px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+  }
+
+  button {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #2980b9;
+  }
+
+  ul {
+    margin-top: 12px;
+    padding: 10px;
+    background-color: #f9fbfd;
+    border-radius: 6px;
+  }
+
+  li {
+    margin: 6px 0;
+  }
+
+  .done {
+    text-decoration: line-through;
+    color: gray;
+  }
+</style>
+</head>
+<body>
+
+<div class="box">
+  <h3>To-Do List</h3>
+
+  <input type="text" id="txtTask" placeholder="Enter task">
+  <button id="btnAdd">Add</button>
+
+  <ul id="list1"></ul>
+</div>
+
+<script>
+  var txtObj  = document.getElementById("txtTask");
+  var btnObj  = document.getElementById("btnAdd");
+  var listObj = document.getElementById("list1");
+
+  function addTask()
+  {
+    let task = txtObj.value.trim();
+    if(task == "") return;
+
+    let li = document.createElement("li");
+    li.innerHTML =
+      `<span class="task">${task}</span>
+       <button data-type="done">Done</button>
+       <button data-type="del" style="background:#e74c3c;">Delete</button>`;
+
+    listObj.appendChild(li);
+    txtObj.value = "";
+  }
+
+  function handleClick(e)
+  {
+    let type = e.target.getAttribute("data-type");
+    if(!type) return;
+
+    let li = e.target.parentElement;
+    let span = li.querySelector(".task");
+
+    if(type == "done")
+    {
+      span.classList.toggle("done");
+    }
+    else if(type == "del")
+    {
+      li.remove();
+    }
+  }
+
+  btnObj.addEventListener("click", addTask);
+  listObj.addEventListener("click", handleClick);
+</script>
+
+</body>
+</html>

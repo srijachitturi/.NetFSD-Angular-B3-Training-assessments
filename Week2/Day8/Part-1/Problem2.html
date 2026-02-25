@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Task Manager</title>
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f4f6fb;
+      padding: 40px;
+    }
+
+    h3 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    hr {
+      width: 300px;
+      margin: 10px auto 25px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 220px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    input[type="text"]:focus {
+      border-color: #3498db;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin-left: 6px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    button:nth-of-type(1) {
+      background-color: #2ecc71;
+      color: white;
+    }
+
+    button:nth-of-type(2) {
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    button:nth-of-type(3) {
+      background-color: #3498db;
+      color: white;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    #div1 {
+      background-color: #ffffff;
+      border: 2px solid #3498db;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 20px;
+      width: 350px;
+      min-height: 60px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    ol {
+      padding-left: 20px;
+    }
+
+    li {
+      padding: 6px;
+      font-size: 15px;
+      color: #34495e;
+    }
+
+    span {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<h3>Task Manager</h3>
+<hr/>
+
+<input type="text" id="txtTask" placeholder="Enter task" />
+<button onclick="addTask()">Add</button>
+<button onclick="deleteTask()">Delete</button>
+<button onclick="listTasks()">List</button>
+
+<div id="div1"></div>
+
+<script type="module">
+
+  // DOM
+  let divObj = document.getElementById("div1");
+  let txtObj = document.getElementById("txtTask");
+
+  let tasks = [];
+
+  // Arrow + Template Literals
+  const showMsg = (msg) =>
+  {
+    divObj.innerHTML = `<p>${msg}</p>`;
+  };
+
+  const showList = (arr) =>
+  {
+    let str = "<ol>";
+
+    for(let t of arr)
+    {
+      str += `<li>${t}</li>`;
+    }
+
+    str += "</ol>";
+    divObj.innerHTML = str;
+  };
+
+  // CALLBACK
+  const add_cb = (task, cb) =>
+  {
+    setTimeout(() =>
+    {
+      tasks.push(task);
+      cb(null, "Task Added");
+    }, 300);
+  };
+
+  const del_cb = (task, cb) =>
+  {
+    setTimeout(() =>
+    {
+      let i = tasks.indexOf(task);
+
+      if(i == -1)
+      {
+        cb("Task not found", null);
+      }
+      else
+      {
+        tasks.splice(i, 1);
+        cb(null, "Task Deleted");
+      }
+    }, 300);
+  };
+
+  const list_cb = (cb) =>
+  {
+    setTimeout(() =>
+    {
+      cb(null, tasks);
+    }, 300);
+  };
+
+  // PROMISE
+  const add_p = (task) =>
+  {
+    return new Promise((resolve, reject) =>
+    {
+      add_cb(task, (err, msg) =>
+      {
+        if(err) reject(err);
+        else resolve(msg);
+      });
+    });
+  };
+
+  const del_p = (task) =>
+  {
+    return new Promise((resolve, reject) =>
+    {
+      del_cb(task, (err, msg) =>
+      {
+        if(err) reject(err);
+        else resolve(msg);
+      });
+    });
+  };
+
+  const list_p = () =>
+  {
+    return new Promise((resolve, reject) =>
+    {
+      list_cb((err, arr) =>
+      {
+        if(err) reject(err);
+        else resolve(arr);
+      });
+    });
+  };
+
+  // ASYNC / AWAIT
+  window.addTask = async function()
+  {
+    try
+    {
+      let task = txtObj.value.trim();
+
+      if(task == "")
+      {
+        showMsg("<span style='color:red;'>Enter task</span>");
+        return;
+      }
+
+      let msg = await add_p(task);
+      showMsg(msg);
+    }
+    catch(error)
+    {
+      showMsg(`<span style='color:red;'>${error}</span>`);
+    }
+  };
+
+  window.deleteTask = async function()
+  {
+    try
+    {
+      let task = txtObj.value.trim();
+
+      if(task == "")
+      {
+        showMsg("<span style='color:red;'>Enter task</span>");
+        return;
+      }
+
+      let msg = await del_p(task);
+      showMsg(msg);
+    }
+    catch(error)
+    {
+      showMsg(`<span style='color:red;'>${error}</span>`);
+    }
+  };
+
+  window.listTasks = async function()
+  {
+    try
+    {
+      let arr = await list_p();
+      showList(arr);
+    }
+    catch(error)
+    {
+      showMsg(`<span style='color:red;'>${error}</span>`);
+    }
+  };
+
+</script>
+
+</body>
+</html>

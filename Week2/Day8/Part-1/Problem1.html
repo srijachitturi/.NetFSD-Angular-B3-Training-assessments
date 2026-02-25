@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather Data Fetcher</title>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: linear-gradient(135deg, #e3f2fd, #f8f9fa);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      background: white;
+      padding: 30px 35px;
+      width: 420px;
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    h3 {
+      text-align: center;
+      color: #1f2937;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    hr {
+      border: none;
+      height: 2px;
+      width: 60px;
+      background: #3b82f6;
+      margin: 12px auto 25px;
+      border-radius: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 15px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      outline: none;
+      margin-bottom: 15px;
+    }
+
+    input:focus {
+      border-color: #3b82f6;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:first-child {
+      background: #10b981;
+      color: white;
+    }
+
+    button:last-child {
+      background: #3b82f6;
+      color: white;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    #div1 {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 18px;
+      min-height: 90px;
+      font-size: 15px;
+      color: #1f2937;
+    }
+
+    #div1 h4 {
+      margin-top: 0;
+      color: #2563eb;
+    }
+
+    #div1 p {
+      margin: 6px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <h3>Weather Data Fetcher</h3>
+  <hr/>
+
+  <input type="text" id="txtCity" placeholder="Enter city name" />
+
+  <div class="btn-group">
+    <button onclick="fn_getWeather_Promise()">Promise</button>
+    <button onclick="fn_getWeather_Async()">Async / Await</button>
+  </div>
+
+  <div id="div1"></div>
+
+</div>
+
+<script>
+  let divObj = document.getElementById("div1");
+  let cityObj = document.getElementById("txtCity");
+
+  const displayWeather = (city, temp) =>
+  {
+    divObj.innerHTML = `
+      <h4>Weather Report</h4>
+      <p><b>City:</b> ${city}</p>
+      <p><b>Temperature:</b> ${temp} °C</p>
+    `;
+  };
+
+  function fn_getWeather_Promise()
+  {
+    let city = cityObj.value.trim();
+    if(city === "")
+    {
+      divObj.innerHTML = "<p style='color:red;'>Enter city name</p>";
+      return;
+    }
+
+    let url1 = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1`;
+
+    fetch(url1)
+      .then(res => res.json())
+      .then(geoData =>
+      {
+        if(!geoData.results)
+          throw "City not found";
+
+        let { latitude, longitude } = geoData.results[0];
+        let url2 = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m`;
+        return fetch(url2);
+      })
+      .then(res => res.json())
+      .then(weatherData =>
+      {
+        displayWeather(city, weatherData.current.temperature_2m);
+      })
+      .catch(() =>
+      {
+        divObj.innerHTML = "<p style='color:red;'>Unable to fetch weather</p>";
+      });
+  }
+
+  async function fn_getWeather_Async()
+  {
+    try
+    {
+      let city = cityObj.value.trim();
+      if(city === "") throw "Enter city";
+
+      let res1 = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1`);
+      let geoData = await res1.json();
+      if(!geoData.results) throw "City not found";
+
+      let { latitude, longitude } = geoData.results[0];
+      let res2 = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m`);
+      let weatherData = await res2.json();
+
+      displayWeather(city, weatherData.current.temperature_2m);
+    }
+    catch
+    {
+      divObj.innerHTML = "<p style='color:red;'>Unable to fetch weather</p>";
+    }
+  }
+</script>
+
+</body>
+</html>
