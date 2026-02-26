@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inheritance</title>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+
+<h2>Vehicle Management System</h2>
+<hr>
+
+<input type="button" value="Show Vehicle Details" onclick="showDetails()">
+<hr>
+
+<p id="output"></p>
+
+<script>
+
+  // Base class
+  class Vehicle
+  {
+    brand = "";
+    speed = 0;
+
+    constructor(brand, speed)
+    {
+      this.brand = brand;
+      this.speed = speed;
+    }
+
+    displayInfo()
+    {
+      return "Brand : " + this.brand + ", Speed : " + this.speed + " km/h";
+    }
+  }
+
+  // Derived class
+  class Car extends Vehicle
+  {
+    fuelType = "";
+
+    constructor(brand, speed, fuelType)
+    {
+      super(brand, speed);
+      this.fuelType = fuelType;
+    }
+
+    showCarDetails()
+    {
+      return "Fuel Type : " + this.fuelType;
+    }
+  }
+
+  function showDetails()
+  {
+    // Create one Car object (premium vehicle)
+    let car1 = new Car("BMW", 240, "Petrol");
+
+    let out = document.getElementById("output");
+
+    out.innerHTML =
+      "<b>Vehicle Details</b><br>" +
+      car1.displayInfo() + "<br><br>" +
+      car1.showCarDetails();
+  }
+
+</script>
+
+</body>
+</html>

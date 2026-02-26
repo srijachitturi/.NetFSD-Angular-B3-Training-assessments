@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Polymorphism</title>
+  <meta charset="UTF-8">
+
+  <!-- Simple, class-style CSS -->
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background:#f3f4f6;
+      padding:20px;
+    }
+
+    .box{
+      width:480px;
+      background:white;
+      border:1px solid #ccc;
+      padding:15px;
+    }
+
+    button{
+      padding:6px 12px;
+      cursor:pointer;
+    }
+
+    #output{
+      margin-top:12px;
+      padding:10px;
+      background:#f9fafb;
+      border:1px solid #ddd;
+    }
+
+    .line{
+      margin-bottom:6px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <h3>Payment System</h3>
+    <input type="button" value="Make Payment" onclick="makePayment()">
+
+    <div id="output"></div>
+  </div>
+
+  <script>
+    class Payment {
+      pay(amount) {
+        return "Processing payment";
+      }
+    }
+
+    // Credit Card Payment
+    class CreditCardPayment extends Payment {
+      pay(amount) {
+        return "Paid ₹" + amount + " using Credit Card";
+      }
+    }
+
+    // UPI Payment
+    class UPIPayment extends Payment {
+      pay(amount) {
+        return "Paid ₹" + amount + " using UPI";
+      }
+    }
+
+    // Cash Payment
+    class CashPayment extends Payment {
+      pay(amount) {
+        return "Paid ₹" + amount + " using Cash";
+      }
+    }
+
+    function makePayment() {
+      let credit = new CreditCardPayment();
+      let upi = new UPIPayment();
+      let cash = new CashPayment();
+
+      let out = document.getElementById("output");
+      out.innerHTML =
+        "<div class='line'>" + credit.pay(500) + "</div>" +
+        "<div class='line'>" + upi.pay(500) + "</div>" +
+        "<div class='line'>" + cash.pay(500) + "</div>";
+    }
+  </script>
+
+</body>
+</html>
