@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FAQ Toggle Section</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+    <style>
+        .answer {
+            display: none;
+            margin-left: 20px;
+        }
+
+        .active {
+            color: blue;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<h3>Frequently Asked Questions</h3>
+<hr/>
+
+<div class="faq">
+
+    <p class="question">1. What is jQuery?</p>
+    <div class="answer">jQuery is a JavaScript library.</div>
+
+    <p class="question">2. Why do we use jQuery?</p>
+    <div class="answer">It simplifies DOM manipulation and event handling.</div>
+
+    <p class="question">3. What is $(document).ready()?</p>
+    <div class="answer">It ensures the DOM is fully loaded before executing code.</div>
+
+    <p class="question">4. What is slideToggle()?</p>
+    <div class="answer">It shows or hides content with sliding animation.</div>
+
+    <p class="question">5. What are jQuery selectors?</p>
+    <div class="answer">Selectors are used to select and manipulate HTML elements.</div>
+
+</div>
+
+<script>
+$(document).ready(function()
+{
+    $(".question").click(function()
+    {
+        $(".answer").hide();
+        $(this).next(".answer").slideToggle(1000);
+        $(this).toggleClass("active");
+    });
+});
+</script>
+
+</body>
+</html>

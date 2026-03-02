@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>To-Do List</title>
+
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+  <style>
+    .done { text-decoration: line-through; }
+  </style>
+</head>
+
+<body>
+
+<h3>To-Do List Application</h3>
+<hr/>
+
+Task:
+<input type="text" id="taskText" />
+<input type="button" id="addBtn" value="Add" />
+
+<h4>
+  Total Tasks: <span id="totalCount">0</span> |
+  Completed Tasks: <span id="doneCount">0</span>
+</h4>
+
+<ul id="taskList"></ul>
+
+<script>
+$(document).ready(function()
+{
+    function updateCounts()
+    {
+        $("#totalCount").text( $("#taskList li").length );
+        $("#doneCount").text( $("#taskList li.done").length );
+    }
+
+    $("#addBtn").click(function()
+    {
+        let task = $("#taskText").val();
+        if(task == "") return;
+
+        $("#taskList").append(
+            "<li>" +
+                "<span class='task'>" + task + "</span> " +
+                "<button class='delBtn'>Delete</button>" +
+            "</li>"
+        );
+
+        $("#taskText").val("");
+        updateCounts();
+    });
+
+    $("#taskList").on("click", ".task", function()
+    {
+        $(this).parent().toggleClass("done");
+        updateCounts();
+    });
+
+    $("#taskList").on("click", ".delBtn", function()
+    {
+        $(this).parent().remove();
+        updateCounts();
+    });
+});
+</script>
+
+</body>
+</html>

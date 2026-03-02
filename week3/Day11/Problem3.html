@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product List - Add to Cart</title>
+
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+</head>
+
+<body>
+
+<h3>My Shop</h3>
+<hr/>
+
+<h4>Cart Items: <span id="cartCount">0</span></h4>
+
+<div id="products">
+
+  <div class="product">
+    <b>Printer</b> - ₹2500
+    <button class="addBtn" data-name="Printer">Add to Cart</button>
+    <span class="msg"></span>
+  </div>
+  <br/>
+
+  <div class="product">
+    <b>Wireless Mouse</b> - ₹499
+    <button class="addBtn" data-name="Wireless Mouse">Add to Cart</button>
+    <span class="msg"></span>
+  </div>
+  <br/>
+
+  <div class="product">
+    <b>Keyboard</b> - ₹899
+    <button class="addBtn" data-name="Keyboard">Add to Cart</button>
+    <span class="msg"></span>
+  </div>
+  <br/>
+
+  <div class="product">
+    <b>USB 32GB</b> - ₹799
+    <button class="addBtn" data-name="USB 32GB">Add to Cart</button>
+    <span class="msg"></span>
+  </div>
+
+</div>
+
+<script>
+$(document).ready(function()
+{
+    let count = 0;
+
+    $("#products").on("click", ".addBtn", function()
+    {
+        count = count + 1;
+
+        $("#cartCount").text(count);
+
+        $(this).prop("disabled", true);
+        $(this).attr("title", "Already added");
+        $(this).next(".msg").text(" Added ");
+    });
+});
+</script>
+
+</body>
+</html>
