@@ -1,0 +1,51 @@
+﻿@using WebApplication3.Models
+@model List<ContactInfo>
+
+<h1 class="display-5">Contact List</h1>
+
+<a class="btn btn-primary" asp-action="AddContact">Add New Contact</a>
+<hr />
+
+<!-- Search -->
+<form asp-action="GetContactById" method="get">
+    <label>Search by Contact ID:</label>
+    <input type="number" name="id" required />
+    <button type="submit">Search</button>
+</form>
+
+<br />
+
+<table border="1" cellpadding="10" cellspacing="0" class="table">
+    <thead>
+        <tr>
+            <th>Contact ID</th>
+            <th>Name</th>
+            <th>Company</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Designation</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (ContactInfo item in Model)
+        {
+            <tr>
+                <td>@item.ContactId</td>
+                <td>@item.FirstName @item.LastName</td>
+                <td>@item.CompanyName</td>
+                <td>@item.EmailId</td>
+                <td>@item.MobileNo</td>
+                <td>@item.Designation</td>
+                <td>
+                    <a asp-action="GetContactById" asp-route-id="@item.ContactId">View</a> |
+
+                    <a asp-action="Edit" asp-route-id="@item.ContactId">Edit</a> |
+
+                    <a asp-action="Delete" asp-route-id="@item.ContactId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

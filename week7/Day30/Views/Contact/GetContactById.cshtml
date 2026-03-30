@@ -1,0 +1,36 @@
+﻿@model WebApplication3.Models.ContactInfo
+
+<h2>Search Result</h2>
+<hr />
+
+@if (Model == null)
+{
+    <p class="text-danger">No contact found with this ID.</p>
+}
+else
+{
+    <dl class="row">
+        <dt class="col-sm-3">Contact ID</dt>
+        <dd class="col-sm-9">@Model.ContactId</dd>
+
+        <dt class="col-sm-3">First Name</dt>
+        <dd class="col-sm-9">@Model.FirstName</dd>
+
+        <dt class="col-sm-3">Last Name</dt>
+        <dd class="col-sm-9">@Model.LastName</dd>
+
+        <dt class="col-sm-3">Company Name</dt>
+        <dd class="col-sm-9">@Model.CompanyName</dd>
+
+        <dt class="col-sm-3">Email ID</dt>
+        <dd class="col-sm-9">@Model.EmailId</dd>
+
+        <dt class="col-sm-3">Mobile Number</dt>
+        <dd class="col-sm-9">@Model.MobileNo</dd>
+
+        <dt class="col-sm-3">Designation</dt>
+        <dd class="col-sm-9">@Model.Designation</dd>
+    </dl>
+}
+
+<a asp-action="ShowContacts" class="btn btn-primary">Back to List</a>
