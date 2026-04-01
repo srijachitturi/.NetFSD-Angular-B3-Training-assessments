@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Product Entry";
+}
+
+<h2>Product Entry Form</h2>
+<hr />
+
+@if (ViewBag.Error != null)
+{
+    <p style="color:red">@ViewBag.Error</p>
+}
+
+<form method="post" action="/product/add">
+
+    @if (ViewBag.Products != null)
+    {
+        foreach (var p in ViewBag.Products)
+        {
+            <input type="hidden" name="oldProductName" value="@p.ProductName" />
+            <input type="hidden" name="oldPrice" value="@p.Price" />
+            <input type="hidden" name="oldQuantity" value="@p.Quantity" />
+        }
+    }
+
+    <div>
+        <label>Product Name</label><br />
+        <input type="text" name="productName" minlength="2" required />
+    </div>
+    <br />
+
+    <div>
+        <label>Price</label><br />
+        <input type="number" name="price" min="1" max="10000"  required />
+    </div>
+    <br />
+
+    <div>
+        <label>Quantity</label><br />
+        <input type="number" name="quantity" min="1" max="1000" required />
+    </div>
+    <br />
+
+    <button type="submit">Add Product</button>
+</form>
+
+<br />
+
+<h3>Product List</h3>
+
+<table border="1" cellspacing="0" cellpadding="8" width="100%">
+    <tr>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+    </tr>
+
+    @if (ViewBag.Products != null)
+    {
+        foreach (var p in ViewBag.Products)
+        {
+            <tr>
+                <td>@p.ProductName</td>
+                <td>@p.Price</td>
+                <td>@p.Quantity</td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="3">No products added</td>
+        </tr>
+    }
+</table>
