@@ -1,0 +1,67 @@
+﻿@model WebApplication4.Models.ContactInfo
+
+<h2>Add Contact</h2>
+
+<form asp-action="AddContact" method="post">
+    <div>
+        <label asp-for="ContactId"></label><br />
+        <input asp-for="ContactId" />
+        <span asp-validation-for="ContactId" style="color:red"></span>
+    </div>
+    <br />
+
+    <div>
+        <label asp-for="FirstName"></label><br />
+        <input asp-for="FirstName" />
+        <span asp-validation-for="FirstName" style="color:red"></span>
+    </div>
+    <br />
+
+    <div>
+        <label asp-for="LastName"></label><br />
+        <input asp-for="LastName" />
+        <span asp-validation-for="LastName" style="color:red"></span>
+    </div>
+    <br />
+
+    <div>
+        <label asp-for="CompanyName"></label><br />
+        <input asp-for="CompanyName" />
+        <span asp-validation-for="CompanyName" style="color:red"></span>
+    </div>
+    <br />
+
+    <div>
+        <label asp-for="EmailId"></label><br />
+        <input asp-for="EmailId" />
+        <span asp-validation-for="EmailId" style="color:red"></span>
+    </div>
+    <br />
+
+    <div>
+        <label asp-for="MobileNo"></label><br />
+        <input asp-for="MobileNo" />
+        <span asp-validation-for="MobileNo" style="color:red"></span>
+    </div>
+    <br />
+
+    <div>
+        <label asp-for="Designation"></label><br />
+        <input asp-for="Designation" />
+        <span asp-validation-for="Designation" style="color:red"></span>
+    </div>
+    <br />
+
+    <button type="submit">Save</button>
+</form>
+
+<p>
+    <a asp-action="ShowContacts">Back to List</a>
+</p>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

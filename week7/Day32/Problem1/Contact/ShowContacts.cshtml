@@ -1,0 +1,46 @@
+﻿@model List<WebApplication4.Models.ContactInfo>
+
+<h2 style="text-align:center; margin-bottom:20px;">Contact List</h2>
+
+<p style="text-align:right;">
+    <a asp-action="AddContact"
+       style="padding:8px 14px; background-color:#4CAF50; color:white; text-decoration:none; border-radius:6px;">
+        + Add Contact
+    </a>
+</p>
+
+<table style="width:100%; border-collapse:collapse; font-family:Arial;">
+    <thead>
+        <tr style="background-color:#f5f5f5;">
+            <th style="padding:10px;">Contact Id</th>
+            <th style="padding:10px;">First Name</th>
+            <th style="padding:10px;">Last Name</th>
+            <th style="padding:10px;">Company</th>
+            <th style="padding:10px;">Email</th>
+            <th style="padding:10px;">Mobile</th>
+            <th style="padding:10px;">Designation</th>
+            <th style="padding:10px;">Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr style="border-bottom:1px solid #ddd; text-align:center;">
+                <td style="padding:10px;">@item.ContactId</td>
+                <td style="padding:10px;">@item.FirstName</td>
+                <td style="padding:10px;">@item.LastName</td>
+                <td style="padding:10px;">@item.CompanyName</td>
+                <td style="padding:10px;">@item.EmailId</td>
+                <td style="padding:10px;">@item.MobileNo</td>
+                <td style="padding:10px;">@item.Designation</td>
+                <td style="padding:10px;">
+                    <a asp-action="GetContactById" asp-route-id="@item.ContactId"
+                       style="color:#2196F3; text-decoration:none;">
+                        View
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
