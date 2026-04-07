@@ -1,0 +1,15 @@
+﻿@model WebApplication6.Models.ContactInfo
+
+<h2>Contact Details</h2>
+<hr />
+
+<p><strong>Contact Id:</strong> @Model.ContactId</p>
+<p><strong>First Name:</strong> @Model.FirstName</p>
+<p><strong>Last Name:</strong> @Model.LastName</p>
+<p><strong>Email Id:</strong> @Model.EmailId</p>
+<p><strong>Mobile No:</strong> @Model.MobileNo</p>
+<p><strong>Designation:</strong> @Model.Designation</p>
+<p><strong>Company:</strong> @Model.CompanyName</p>
+<p><strong>Department:</strong> @Model.DepartmentName</p>
+
+<a asp-action="ShowContacts" class="btn btn-secondary">Back</a>

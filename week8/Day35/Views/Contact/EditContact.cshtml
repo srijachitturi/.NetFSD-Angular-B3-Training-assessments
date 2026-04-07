@@ -1,0 +1,50 @@
+﻿@model WebApplication6.Models.ContactInfo
+
+<h2>Edit Contact</h2>
+<hr />
+
+<form asp-action="EditContact" method="post">
+    <input type="hidden" asp-for="ContactId" />
+
+    <div class="mb-3">
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="EmailId"></label>
+        <input asp-for="EmailId" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MobileNo"></label>
+        <input asp-for="MobileNo" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Designation"></label>
+        <input asp-for="Designation" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CompanyId">Company</label>
+        <select asp-for="CompanyId" asp-items="ViewBag.Companies" class="form-select">
+            <option value="">-- Select Company --</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DepartmentId">Department</label>
+        <select asp-for="DepartmentId" asp-items="ViewBag.Departments" class="form-select">
+            <option value="">-- Select Department --</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a asp-action="ShowContacts" class="btn btn-secondary">Back</a>
+</form>

@@ -1,0 +1,55 @@
+﻿@model WebApplication6.Models.ContactInfo
+
+<h2>Add Contact</h2>
+<hr />
+
+<form asp-action="AddContact" method="post">
+    <div>
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" class="form-control" />
+    </div>
+    <br />
+
+    <div>
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control" />
+    </div>
+    <br />
+
+    <div>
+        <label asp-for="EmailId"></label>
+        <input asp-for="EmailId" class="form-control" />
+    </div>
+    <br />
+
+    <div>
+        <label asp-for="MobileNo"></label>
+        <input asp-for="MobileNo" class="form-control" />
+    </div>
+    <br />
+
+    <div>
+        <label asp-for="Designation"></label>
+        <input asp-for="Designation" class="form-control" />
+    </div>
+    <br />
+
+    <div>
+        <label asp-for="CompanyId">Company</label>
+        <select asp-for="CompanyId" asp-items="ViewBag.Companies" class="form-control">
+            <option value="">-- Select Company --</option>
+        </select>
+    </div>
+    <br />
+
+    <div>
+        <label asp-for="DepartmentId">Department</label>
+        <select asp-for="DepartmentId" asp-items="ViewBag.Departments" class="form-control">
+            <option value="">-- Select Department --</option>
+        </select>
+    </div>
+    <br />
+
+    <button type="submit">Save</button>
+    <a asp-action="ShowContacts">Back</a>
+</form>
